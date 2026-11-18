@@ -22,6 +22,11 @@ export const clearSession = () => {
   removeUser()
 }
 
+export const getApiUrl = (path) => {
+  const base = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
+  return `${base}${path}`
+}
+
 export async function apiRequest(path, options = {}) {
   const { headers = {}, body, ...rest } = options
   const finalHeaders = { ...headers }
@@ -36,7 +41,7 @@ export async function apiRequest(path, options = {}) {
 
   let response
   try {
-    response = await fetch(path, { ...rest, headers: finalHeaders, body: finalBody })
+    response = await fetch(getApiUrl(path), { ...rest, headers: finalHeaders, body: finalBody })
   } catch (err) {
     return { status: 'error', message: err.message, data: null }
   }
