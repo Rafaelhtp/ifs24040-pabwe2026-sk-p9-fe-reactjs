@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import MarkdownEditor from '../../../components/MarkdownEditor'
+import { Suspense, lazy, useState } from 'react'
 import { CATEGORIES, createPost, updatePost } from '../api/blogApi'
 import { showErrorAlert, showSuccessAlert } from '../../../helpers/toolsHelper'
+
+const MarkdownEditor = lazy(() => import('../../../components/MarkdownEditor'))
 
 const fieldClass =
   'w-full rounded border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-slate-800'
@@ -47,7 +48,7 @@ export default function PostModal({ post, isDark, onClose, onSaved }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2"
     >
       <div className="flex max-h-[96vh] w-full max-w-[96vw] flex-col overflow-hidden rounded-lg bg-white dark:bg-slate-900">
-        <header className="bg-[var(--color-accent)] px-6 py-4 text-white">
+        <header className="bg-[var(--color-accent)] px-6 py-4 text-white dark:text-slate-950 font-medium">
           <h2 className="text-xl font-bold">{p.id ? 'Ubah Artikel' : 'Tambah Artikel'}</h2>
         </header>
         <div className="flex-1 space-y-3 overflow-y-auto p-6">
@@ -84,7 +85,9 @@ export default function PostModal({ post, isDark, onClose, onSaved }) {
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
           />
-          <MarkdownEditor value={content} onChange={setContent} darkMode={isDark} />
+          <Suspense fallback={<div className="py-4 text-sm text-gray-600 dark:text-gray-300">Memuat konten...</div>}>
+            <MarkdownEditor value={content} onChange={setContent} darkMode={isDark} />
+          </Suspense>
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -101,7 +104,7 @@ export default function PostModal({ post, isDark, onClose, onSaved }) {
           <button
             type="button"
             disabled={saving}
-            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white disabled:opacity-50"
+            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium disabled:opacity-50"
             onClick={handleSave}
           >
             Simpan

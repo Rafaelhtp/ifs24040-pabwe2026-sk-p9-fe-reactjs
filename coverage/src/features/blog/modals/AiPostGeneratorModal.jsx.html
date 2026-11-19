@@ -36,7 +36,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
@@ -50,14 +50,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
@@ -188,10 +188,14 @@
 <a name='L112'></a><a href='#L112'>112</a>
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -272,24 +276,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -302,10 +288,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react'
-import MarkdownViewer from '../../../components/MarkdownViewer'
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Suspense, lazy, useState } from 'react'
 import { CATEGORIES, aiGenerate } from '../api/blogApi'
 import { showErrorAlert } from '../../../helpers/toolsHelper'
+&nbsp;
+const MarkdownViewer = lazy(() =&gt; import('../../../components/MarkdownViewer'))
 &nbsp;
 const fieldClass =
   'w-full rounded border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-slate-800'
@@ -338,7 +345,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2"
     &gt;
       &lt;div className="flex max-h-[96vh] w-full max-w-[96vw] flex-col overflow-hidden rounded-lg bg-white dark:bg-slate-900"&gt;
-        &lt;header className="bg-[var(--color-accent)] px-6 py-4 text-white"&gt;
+        &lt;header className="bg-[var(--color-accent)] px-6 py-4 text-white dark:text-slate-950 font-medium"&gt;
           &lt;h2 className="text-xl font-bold"&gt;AI Generator&lt;/h2&gt;
         &lt;/header&gt;
         &lt;div className="flex-1 space-y-3 overflow-y-auto p-6"&gt;
@@ -372,7 +379,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           &lt;button
             type="button"
             disabled={loading}
-            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white disabled:opacity-50"
+            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium disabled:opacity-50"
             onClick={handleGenerate}
           &gt;
             {loading ? 'Membuat...' : 'Generate'}
@@ -380,7 +387,9 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           {result &amp;&amp; (
             &lt;section data-testid="ai-preview" className="rounded border border-gray-200 p-4 dark:border-gray-700"&gt;
               &lt;h3 className="mb-2 text-lg font-semibold"&gt;{result.title}&lt;/h3&gt;
-              &lt;MarkdownViewer content={result.content} darkMode={isDark} /&gt;
+              &lt;Suspense fallback={&lt;div className="py-4 text-sm text-gray-600 dark:text-gray-300"&gt;Memuat konten...&lt;/div&gt;}&gt;
+                &lt;MarkdownViewer content={result.content} darkMode={isDark} /&gt;
+              &lt;/Suspense&gt;
               {sources.length &gt; 0 &amp;&amp; (
                 &lt;div className="mt-4"&gt;
                   &lt;h4 className="font-semibold"&gt;Sumber Penelusuran&lt;/h4&gt;
@@ -405,7 +414,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           {result &amp;&amp; (
             &lt;button
               type="button"
-              className="rounded bg-[var(--color-accent)] px-4 py-2 text-white"
+              className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium"
               onClick={() =&gt; onApply(result)}
             &gt;
               Terapkan ke Editor
@@ -423,7 +432,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-11-19T01:17:25.110Z
+                at 2026-11-19T01:41:21.491Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

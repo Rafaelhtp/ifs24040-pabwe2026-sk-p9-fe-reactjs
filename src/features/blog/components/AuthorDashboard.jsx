@@ -76,7 +76,7 @@ export default function AuthorDashboard({ navigate, isDark }) {
           </button>
           <button
             type="button"
-            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white"
+            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium"
             onClick={() => openPostModal(null)}
           >
             Tambah Artikel

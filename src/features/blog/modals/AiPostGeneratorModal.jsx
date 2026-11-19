@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import MarkdownViewer from '../../../components/MarkdownViewer'
+import { Suspense, lazy, useState } from 'react'
 import { CATEGORIES, aiGenerate } from '../api/blogApi'
 import { showErrorAlert } from '../../../helpers/toolsHelper'
+
+const MarkdownViewer = lazy(() => import('../../../components/MarkdownViewer'))
 
 const fieldClass =
   'w-full rounded border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-slate-800'
@@ -34,7 +35,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2"
     >
       <div className="flex max-h-[96vh] w-full max-w-[96vw] flex-col overflow-hidden rounded-lg bg-white dark:bg-slate-900">
-        <header className="bg-[var(--color-accent)] px-6 py-4 text-white">
+        <header className="bg-[var(--color-accent)] px-6 py-4 text-white dark:text-slate-950 font-medium">
           <h2 className="text-xl font-bold">AI Generator</h2>
         </header>
         <div className="flex-1 space-y-3 overflow-y-auto p-6">
@@ -68,7 +69,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           <button
             type="button"
             disabled={loading}
-            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white disabled:opacity-50"
+            className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium disabled:opacity-50"
             onClick={handleGenerate}
           >
             {loading ? 'Membuat...' : 'Generate'}
@@ -76,7 +77,9 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           {result && (
             <section data-testid="ai-preview" className="rounded border border-gray-200 p-4 dark:border-gray-700">
               <h3 className="mb-2 text-lg font-semibold">{result.title}</h3>
-              <MarkdownViewer content={result.content} darkMode={isDark} />
+              <Suspense fallback={<div className="py-4 text-sm text-gray-600 dark:text-gray-300">Memuat konten...</div>}>
+                <MarkdownViewer content={result.content} darkMode={isDark} />
+              </Suspense>
               {sources.length > 0 && (
                 <div className="mt-4">
                   <h4 className="font-semibold">Sumber Penelusuran</h4>
@@ -101,7 +104,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           {result && (
             <button
               type="button"
-              className="rounded bg-[var(--color-accent)] px-4 py-2 text-white"
+              className="rounded bg-[var(--color-accent)] px-4 py-2 text-white dark:text-slate-950 font-medium"
               onClick={() => onApply(result)}
             >
               Terapkan ke Editor

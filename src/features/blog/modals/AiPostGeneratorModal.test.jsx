@@ -41,7 +41,7 @@ describe('AiPostGeneratorModal', () => {
     await generate()
     expect(await screen.findByText('Hasil')).toBeInTheDocument()
     expect(aiGenerate).toHaveBeenCalledWith({ topic: 'AI', category: 'Teknologi', include_web_search: true })
-    expect(screen.getByTestId('viewer')).toHaveTextContent('# md')
+    expect(await screen.findByTestId('viewer')).toHaveTextContent('# md')
     expect(screen.getByText('Sumber Penelusuran')).toBeInTheDocument()
     expect(screen.getByText('Src')).toHaveAttribute('href', 'http://s')
     await userEvent.click(screen.getByText('Terapkan ke Editor'))

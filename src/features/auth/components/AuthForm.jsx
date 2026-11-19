@@ -68,7 +68,7 @@ export default function AuthForm({ mode = 'login', onSuccess }) {
         id={isLogin ? 'login-submit' : 'register-submit'}
         type="submit"
         disabled={loading}
-        className="w-full rounded bg-[var(--color-accent)] px-3 py-2 text-white disabled:opacity-50"
+        className="w-full rounded bg-[var(--color-accent)] px-3 py-2 text-white dark:text-slate-950 font-medium disabled:opacity-50"
       >
         {isLogin ? 'Masuk' : 'Daftar'}
       </button>

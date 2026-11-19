@@ -23,7 +23,7 @@ describe('PostModal', () => {
     render(<PostModal post={null} isDark onClose={onClose} onSaved={onSaved} />)
     expect(screen.getByText('Tambah Artikel')).toBeInTheDocument()
     expect(document.querySelector('.max-w-\\[96vw\\]')).not.toBeNull()
-    expect(screen.getByTestId('editor')).toHaveAttribute('data-dark', 'true')
+    expect(await screen.findByTestId('editor')).toHaveAttribute('data-dark', 'true')
 
     await userEvent.type(screen.getByLabelText('Judul'), 'Hai')
     await userEvent.selectOptions(screen.getByLabelText('Kategori'), 'Bisnis')

@@ -32,7 +32,7 @@ export default function PublicArticleList({ navigate }) {
             onClick={() => setCategory(name)}
             className={`rounded-full border px-4 py-1 text-sm ${
               category === name
-                ? 'border-transparent bg-[var(--color-accent)] text-white'
+                ? 'border-transparent bg-[var(--color-accent)] text-white dark:text-slate-950 font-medium'
                 : 'border-gray-300 dark:border-gray-600'
             }`}
           >

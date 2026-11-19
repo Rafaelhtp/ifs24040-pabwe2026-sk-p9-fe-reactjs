@@ -28,7 +28,7 @@ describe('PublicArticleDetail', () => {
     expect(screen.getByText(/Budi/)).toHaveTextContent('4 menit baca')
     expect(screen.getByText(/Budi/)).toHaveTextContent('Bisnis')
     expect(screen.getByRole('img')).toHaveAttribute('src', 'http://x/y.png')
-    expect(screen.getByTestId('viewer')).toHaveTextContent('# isi')
+    expect(await screen.findByTestId('viewer')).toHaveTextContent('# isi')
     expect(screen.getByTestId('viewer')).toHaveAttribute('data-dark', 'true')
   })
 
