@@ -33,12 +33,12 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <main className="w-full px-4 py-6 md:px-10">
+    <div className="w-full px-4 py-6 md:px-10">
       <h1 className="mb-6 text-2xl font-bold">Panel Administrasi</h1>
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         {cards.map((c) => (
           <div key={c.label} className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
-            <p className="text-sm text-gray-500">{c.label}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{c.label}</p>
             <p className="text-3xl font-bold text-[var(--color-accent)]">{c.value}</p>
           </div>
         ))}
@@ -114,6 +114,6 @@ export default function AdminDashboard() {
           </tbody>
         </table>
       </div>
-    </main>
+    </div>
   )
 }

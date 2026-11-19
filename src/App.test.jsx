@@ -41,7 +41,7 @@ describe('App', () => {
     expect(screen.getByTestId('list')).toBeInTheDocument()
     await userEvent.click(screen.getByText('open'))
     expect(window.location.pathname).toBe('/posts/abc')
-    expect(screen.getByTestId('detail')).toHaveTextContent('abc')
+    expect(await screen.findByTestId('detail')).toHaveTextContent('abc')
   })
 
   it('renders list on /public', () => {
@@ -50,10 +50,10 @@ describe('App', () => {
     expect(screen.getByTestId('list')).toBeInTheDocument()
   })
 
-  it('decodes slug', () => {
+  it('decodes slug', async () => {
     go('/posts/hello%20x')
     render(<App />)
-    expect(screen.getByTestId('detail')).toHaveTextContent('hello x')
+    expect(await screen.findByTestId('detail')).toHaveTextContent('hello x')
   })
 
   it('redirects guests from /author to /login', async () => {
@@ -63,11 +63,11 @@ describe('App', () => {
     expect(screen.getByTestId('auth-page')).toHaveAttribute('data-mode', 'login')
   })
 
-  it('shows author dashboard for logged in users', () => {
+  it('shows author dashboard for logged in users', async () => {
     login({ role: 'author' })
     go('/author')
     render(<App />)
-    expect(screen.getByTestId('author')).toBeInTheDocument()
+    expect(await screen.findByTestId('author')).toBeInTheDocument()
   })
 
   it('guards /admin', async () => {
@@ -85,7 +85,7 @@ describe('App', () => {
     login({ role: 'admin' })
     go('/admin')
     render(<App />)
-    expect(screen.getByTestId('admin')).toBeInTheDocument()
+    expect(await screen.findByTestId('admin')).toBeInTheDocument()
   })
 
   it('renders register and goes to login after success', async () => {

@@ -63,7 +63,7 @@ export default function AuthorDashboard({ navigate, isDark }) {
   }
 
   return (
-    <main className="w-full px-4 py-6 md:px-10">
+    <div className="w-full px-4 py-6 md:px-10">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold">Workspace Penulis</h1>
         <div className="flex gap-2">
@@ -97,7 +97,7 @@ export default function AuthorDashboard({ navigate, isDark }) {
           <tbody>
             {posts.length === 0 ? (
               <tr>
-                <td colSpan={4} className="p-4 text-center text-gray-500">
+                <td colSpan={4} className="p-4 text-center text-gray-600 dark:text-gray-300">
                   Belum ada artikel.
                 </td>
               </tr>
@@ -176,6 +176,6 @@ export default function AuthorDashboard({ navigate, isDark }) {
       {aiOpen && (
         <AiPostGeneratorModal isDark={isDark} onClose={() => setAiOpen(false)} onApply={handleApply} />
       )}
-    </main>
+    </div>
   )
 }

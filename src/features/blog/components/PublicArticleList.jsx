@@ -13,7 +13,8 @@ export default function PublicArticleList({ navigate }) {
   }, [search, category])
 
   return (
-    <main className="mx-auto max-w-6xl p-4">
+    <div className="mx-auto max-w-6xl p-4">
+      <h1 className="mb-4 text-2xl font-bold">Jelajahi Artikel</h1>
       <input
         type="search"
         placeholder="Cari artikel..."
@@ -40,7 +41,7 @@ export default function PublicArticleList({ navigate }) {
         ))}
       </div>
       {posts.length === 0 ? (
-        <p className="text-center text-gray-500">Belum ada artikel.</p>
+        <p className="text-center text-gray-600 dark:text-gray-300">Belum ada artikel.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
@@ -52,12 +53,12 @@ export default function PublicArticleList({ navigate }) {
             >
               <span className="text-xs text-[var(--color-accent)]">{post.category}</span>
               <h2 className="my-1 text-lg font-semibold">{post.title}</h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{post.excerpt}</p>
-              <p className="mt-2 text-xs text-gray-500">{post.reading_time} menit baca</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">{post.excerpt}</p>
+              <p className="mt-2 text-xs text-gray-600 dark:text-gray-300">{post.reading_time} menit baca</p>
             </article>
           ))}
         </div>
       )}
-    </main>
+    </div>
   )
 }

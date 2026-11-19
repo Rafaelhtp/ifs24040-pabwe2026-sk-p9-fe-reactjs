@@ -10,6 +10,7 @@
 }
 
 :root.dark {
+  --color-accent: #60a5fa;
   --color-bg: #0f172a;
   --color-fg: #f3f4f6;
   color-scheme: dark;
@@ -19,6 +20,11 @@
 :root[data-accent="rose"] { --color-accent: #e11d48; }
 :root[data-accent="violet"] { --color-accent: #7c3aed; }
 :root[data-accent="amber"] { --color-accent: #d97706; }
+
+:root.dark[data-accent="emerald"] { --color-accent: #34d399; }
+:root.dark[data-accent="rose"] { --color-accent: #fb7185; }
+:root.dark[data-accent="violet"] { --color-accent: #a78bfa; }
+:root.dark[data-accent="amber"] { --color-accent: #fbbf24; }
 
 body {
   margin: 0;

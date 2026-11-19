@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import useTheme from './hooks/useTheme'
 import { clearSession, getUser } from './helpers/apiHelper'
 import { logout } from './features/auth/api/authApi'
 import AuthPage from './features/auth/components/AuthPage'
 import StickyNavbar from './features/blog/components/StickyNavbar'
 import PublicArticleList from './features/blog/components/PublicArticleList'
-import PublicArticleDetail from './features/blog/components/PublicArticleDetail'
-import AuthorDashboard from './features/blog/components/AuthorDashboard'
-import AdminDashboard from './features/admin/components/AdminDashboard'
+
+const PublicArticleDetail = lazy(() => import('./features/blog/components/PublicArticleDetail'))
+const AuthorDashboard = lazy(() => import('./features/blog/components/AuthorDashboard'))
+const AdminDashboard = lazy(() => import('./features/admin/components/AdminDashboard'))
 
 const POST_ROUTE = /^\/posts\/([^/]+)$/
 
@@ -80,7 +81,7 @@ export default function App() {
     }
     return (
       <div className="p-6 text-center">
-        <p>Halaman tidak ditemukan.</p>
+        <h1 className="text-xl font-semibold">Halaman tidak ditemukan.</h1>
         <button type="button" className="mt-2 text-[var(--color-accent)]" onClick={() => navigate('/')}>
           Ke Beranda
         </button>
@@ -89,7 +90,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <StickyNavbar
         user={user}
         isDark={isDark}
@@ -97,7 +98,9 @@ export default function App() {
         onLogout={handleLogout}
         navigate={navigate}
       />
-      {renderRoute()}
+      <main className="flex-1">
+        <Suspense fallback={<div className="p-6">Memuat...</div>}>{renderRoute()}</Suspense>
+      </main>
     </div>
   )
 }

@@ -6,7 +6,7 @@ export default function AuthPage({ mode: initialMode = 'login', onSuccess }) {
   const isLogin = mode === 'login'
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center p-6">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center p-6">
       <h1 className="mb-6 text-2xl font-bold">{isLogin ? 'Masuk' : 'Daftar'} Delcom Blog</h1>
       <AuthForm mode={mode} onSuccess={onSuccess} />
       <button
@@ -17,6 +17,6 @@ export default function AuthPage({ mode: initialMode = 'login', onSuccess }) {
       >
         {isLogin ? 'Belum punya akun? Daftar' : 'Sudah punya akun? Masuk'}
       </button>
-    </main>
+    </div>
   )
 }
