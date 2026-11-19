@@ -4,8 +4,8 @@ import { clearSession, getUser } from './helpers/apiHelper'
 import { logout } from './features/auth/api/authApi'
 import StickyNavbar from './features/blog/components/StickyNavbar'
 import PublicArticleList from './features/blog/components/PublicArticleList'
+import AuthPage from './features/auth/components/AuthPage'
 
-const AuthPage = lazy(() => import('./features/auth/components/AuthPage'))
 const PublicArticleDetail = lazy(() => import('./features/blog/components/PublicArticleDetail'))
 const AuthorDashboard = lazy(() => import('./features/blog/components/AuthorDashboard'))
 const AdminDashboard = lazy(() => import('./features/admin/components/AdminDashboard'))
