@@ -7,9 +7,11 @@ export default function PublicArticleList({ navigate }) {
   const [category, setCategory] = useState('Semua')
 
   useEffect(() => {
-    getPublicPosts({ search, category: category === 'Semua' ? '' : category }).then((res) =>
-      setPosts(res.status === 'success' ? toList(res.data) : []),
-    )
+    const prefetched = !search && category === 'Semua' ? window.__PREFETCH_POSTS__ : null
+    delete window.__PREFETCH_POSTS__
+    const request =
+      prefetched || getPublicPosts({ search, category: category === 'Semua' ? '' : category })
+    request.then((res) => setPosts(res.status === 'success' ? toList(res.data) : []))
   }, [search, category])
 
   return (

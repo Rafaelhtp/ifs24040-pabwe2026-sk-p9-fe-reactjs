@@ -60,7 +60,7 @@ describe('App', () => {
     go('/author')
     render(<App />)
     await waitFor(() => expect(window.location.pathname).toBe('/login'))
-    expect(screen.getByTestId('auth-page')).toHaveAttribute('data-mode', 'login')
+    expect(await screen.findByTestId('auth-page')).toHaveAttribute('data-mode', 'login')
   })
 
   it('shows author dashboard for logged in users', async () => {
@@ -91,7 +91,7 @@ describe('App', () => {
   it('renders register and goes to login after success', async () => {
     go('/register')
     render(<App />)
-    expect(screen.getByTestId('auth-page')).toHaveAttribute('data-mode', 'register')
+    expect(await screen.findByTestId('auth-page')).toHaveAttribute('data-mode', 'register')
     await userEvent.click(screen.getByText('auth-success'))
     expect(window.location.pathname).toBe('/login')
   })
@@ -100,21 +100,21 @@ describe('App', () => {
     go('/login')
     const { unmount } = render(<App />)
     login({ role: 'admin' })
-    await userEvent.click(screen.getByText('auth-success'))
+    await userEvent.click(await screen.findByText('auth-success'))
     expect(window.location.pathname).toBe('/admin')
     unmount()
 
     go('/login')
     const second = render(<App />)
     login({ role: 'author' })
-    await userEvent.click(screen.getByText('auth-success'))
+    await userEvent.click(await screen.findByText('auth-success'))
     expect(window.location.pathname).toBe('/author')
     second.unmount()
 
     localStorage.clear()
     go('/login')
     render(<App />)
-    await userEvent.click(screen.getByText('auth-success'))
+    await userEvent.click(await screen.findByText('auth-success'))
     await waitFor(() => expect(window.location.pathname).toBe('/login'))
   })
 
@@ -127,13 +127,13 @@ describe('App', () => {
     expect(screen.getByTestId('list')).toBeInTheDocument()
   })
 
-  it('reacts to popstate', () => {
+  it('reacts to popstate', async () => {
     render(<App />)
     go('/register')
     act(() => {
       window.dispatchEvent(new PopStateEvent('popstate'))
     })
-    expect(screen.getByTestId('auth-page')).toBeInTheDocument()
+    expect(await screen.findByTestId('auth-page')).toBeInTheDocument()
   })
 
   it('logs out', async () => {

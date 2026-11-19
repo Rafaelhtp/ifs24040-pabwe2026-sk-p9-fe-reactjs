@@ -8,7 +8,10 @@ export default function PublicArticleDetail({ slug, navigate, isDark }) {
   const [post, setPost] = useState(undefined)
 
   useEffect(() => {
-    getPublicPostBySlug(slug).then((res) => setPost(res.status === 'success' ? res.data : null))
+    const prefetched = window.__PREFETCH_POST_DETAIL__
+    delete window.__PREFETCH_POST_DETAIL__
+    const request = prefetched || getPublicPostBySlug(slug)
+    request.then((res) => setPost(res.status === 'success' ? res.data : null))
   }, [slug])
 
   if (post === undefined) return <h1 className="p-6 text-center text-xl font-semibold">Memuat...</h1>

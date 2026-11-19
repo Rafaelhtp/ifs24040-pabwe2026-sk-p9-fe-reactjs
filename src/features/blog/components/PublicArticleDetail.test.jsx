@@ -17,7 +17,18 @@ const post = {
 }
 
 describe('PublicArticleDetail', () => {
-  beforeEach(() => getPublicPostBySlug.mockReset())
+  beforeEach(() => {
+    delete window.__PREFETCH_POST_DETAIL__
+    getPublicPostBySlug.mockReset()
+  })
+
+  it('uses window.__PREFETCH_POST_DETAIL__ when available and deletes it', async () => {
+    window.__PREFETCH_POST_DETAIL__ = Promise.resolve({ status: 'success', data: post })
+    render(<PublicArticleDetail slug="judul" navigate={vi.fn()} isDark={false} />)
+    expect(window.__PREFETCH_POST_DETAIL__).toBeUndefined()
+    expect(await screen.findByText('Judul')).toBeInTheDocument()
+    expect(getPublicPostBySlug).not.toHaveBeenCalled()
+  })
 
   it('shows loading then full article with cover', async () => {
     getPublicPostBySlug.mockResolvedValue({ status: 'success', data: post })

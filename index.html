@@ -10,6 +10,33 @@
     />
     <link rel="preconnect" href="https://ifs24040-pabwe2026-sk-p9-be-golang-gin.s1if.cloud" crossorigin />
     <link rel="dns-prefetch" href="https://ifs24040-pabwe2026-sk-p9-be-golang-gin.s1if.cloud" />
+    <script>
+      (function () {
+        var base =
+          location.port === '5174'
+            ? ''
+            : 'https://ifs24040-pabwe2026-sk-p9-be-golang-gin.s1if.cloud';
+        var p = location.pathname;
+        var json = function (r) {
+          return r.json();
+        };
+        var fail = function () {
+          return { status: 'error' };
+        };
+        if (p === '/' || p === '/public') {
+          window.__PREFETCH_POSTS__ = fetch(base + '/api/public/posts')
+            .then(json)
+            .catch(fail);
+        } else {
+          var m = p.match(/^\/posts\/([^/]+)$/);
+          if (m) {
+            window.__PREFETCH_POST_DETAIL__ = fetch(base + '/api/public/posts/' + m[1])
+              .then(json)
+              .catch(fail);
+          }
+        }
+      })();
+    </script>
     <title>ifs24040-pabwe2026-sk-p9-fe-reactjs</title>
   </head>
   <body>

@@ -12,7 +12,18 @@ const posts = [
 ]
 
 describe('PublicArticleList', () => {
-  beforeEach(() => getPublicPosts.mockReset())
+  beforeEach(() => {
+    delete window.__PREFETCH_POSTS__
+    getPublicPosts.mockReset()
+  })
+
+  it('uses window.__PREFETCH_POSTS__ on initial mount and deletes it', async () => {
+    window.__PREFETCH_POSTS__ = Promise.resolve({ status: 'success', data: [posts[0]] })
+    render(<PublicArticleList navigate={vi.fn()} />)
+    expect(window.__PREFETCH_POSTS__).toBeUndefined()
+    expect(await screen.findByText('Judul A')).toBeInTheDocument()
+    expect(getPublicPosts).not.toHaveBeenCalled()
+  })
 
   it('renders cards and navigates', async () => {
     getPublicPosts.mockResolvedValue({ status: 'success', data: posts })

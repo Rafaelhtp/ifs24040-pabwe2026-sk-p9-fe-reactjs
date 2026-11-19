@@ -2,10 +2,10 @@ import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import useTheme from './hooks/useTheme'
 import { clearSession, getUser } from './helpers/apiHelper'
 import { logout } from './features/auth/api/authApi'
-import AuthPage from './features/auth/components/AuthPage'
 import StickyNavbar from './features/blog/components/StickyNavbar'
 import PublicArticleList from './features/blog/components/PublicArticleList'
 
+const AuthPage = lazy(() => import('./features/auth/components/AuthPage'))
 const PublicArticleDetail = lazy(() => import('./features/blog/components/PublicArticleDetail'))
 const AuthorDashboard = lazy(() => import('./features/blog/components/AuthorDashboard'))
 const AdminDashboard = lazy(() => import('./features/admin/components/AdminDashboard'))
