@@ -2,8 +2,32 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+function inlineCssPlugin() {
+  return {
+    name: 'inline-css',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, { bundle }) {
+        if (!bundle) return html
+        return html.replace(
+          /<link\s+rel="stylesheet"[^>]*href="\/([^"]+\.css)"[^>]*>/g,
+          (match, fileName) => {
+            const asset = bundle[fileName]
+            if (asset && asset.type === 'asset') {
+              delete bundle[fileName]
+              return `<style>${asset.source}</style>`
+            }
+            return match
+          },
+        )
+      },
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), inlineCssPlugin()],
   server: {
     port: 5174,
     proxy: {
