@@ -1,3 +1,4 @@
+import { gzipSync } from 'node:zlib'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -26,8 +27,27 @@ function inlineCssPlugin() {
   }
 }
 
+function gzipAssetsPlugin() {
+  return {
+    name: 'gzip-assets',
+    apply: 'build',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      for (const [fileName, item] of Object.entries(bundle)) {
+        if (!/\.(js|css|html|svg)$/.test(fileName)) continue
+        const source = item.type === 'chunk' ? item.code : item.source
+        this.emitFile({
+          type: 'asset',
+          fileName: `${fileName}.gz`,
+          source: gzipSync(source, { level: 9 }),
+        })
+      }
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), inlineCssPlugin()],
+  plugins: [react(), tailwindcss(), inlineCssPlugin(), gzipAssetsPlugin()],
   server: {
     port: 5174,
     proxy: {
@@ -40,6 +60,15 @@ export default defineConfig({
   build: {
     target: 'es2022',
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (/node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) {
+            return 'vendor'
+          }
+        },
+      },
+    },
   },
   test: {
     globals: true,
