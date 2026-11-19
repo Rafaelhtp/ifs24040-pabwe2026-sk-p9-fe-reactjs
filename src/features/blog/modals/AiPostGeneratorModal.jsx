@@ -1,8 +1,7 @@
-import { Suspense, lazy, useState } from 'react'
+import { useState } from 'react'
+import MarkdownViewer from '../../../components/MarkdownViewer'
 import { CATEGORIES, aiGenerate } from '../api/blogApi'
 import { showErrorAlert } from '../../../helpers/toolsHelper'
-
-const MarkdownViewer = lazy(() => import('../../../components/MarkdownViewer'))
 
 const fieldClass =
   'w-full rounded border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-slate-800'
@@ -77,9 +76,7 @@ export default function AiPostGeneratorModal({ isDark, onClose, onApply }) {
           {result && (
             <section data-testid="ai-preview" className="rounded border border-gray-200 p-4 dark:border-gray-700">
               <h3 className="mb-2 text-lg font-semibold">{result.title}</h3>
-              <Suspense fallback={<div className="py-4 text-sm text-gray-600 dark:text-gray-300">Memuat konten...</div>}>
-                <MarkdownViewer content={result.content} darkMode={isDark} />
-              </Suspense>
+              <MarkdownViewer content={result.content} darkMode={isDark} />
               {sources.length > 0 && (
                 <div className="mt-4">
                   <h4 className="font-semibold">Sumber Penelusuran</h4>

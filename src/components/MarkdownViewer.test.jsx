@@ -1,37 +1,26 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render } from '@testing-library/react'
-
-const created = []
-vi.mock('@toast-ui/editor/viewer', () => ({
-  default: class {
-    constructor(opts) {
-      this.opts = opts
-      this.destroy = vi.fn()
-      created.push(this)
-    }
-  },
-}))
-vi.mock('@toast-ui/editor/dist/toastui-editor-viewer.css', () => ({}))
-vi.mock('@toast-ui/editor/dist/theme/toastui-editor-dark.css', () => ({}))
-
+import { describe, it, expect } from 'vitest'
+import { render, screen } from '@testing-library/react'
 import MarkdownViewer from './MarkdownViewer'
 
 describe('MarkdownViewer', () => {
-  beforeEach(() => { created.length = 0 })
-
-  it('renders with defaults', () => {
-    const { getByTestId, unmount } = render(<MarkdownViewer />)
-    expect(getByTestId('markdown-viewer')).toBeInTheDocument()
-    expect(created[0].opts).toMatchObject({ initialValue: '', theme: 'light' })
-    unmount()
-    expect(created[0].destroy).toHaveBeenCalled()
+  it('renders defaults in light mode', () => {
+    render(<MarkdownViewer />)
+    const viewer = screen.getByTestId('markdown-viewer')
+    expect(viewer).toHaveAttribute('data-theme', 'light')
+    expect(viewer).toHaveClass('text-gray-800')
+    expect(viewer).toBeEmptyDOMElement()
   })
 
-  it('renders content in dark mode and re-creates on change', () => {
-    const { rerender } = render(<MarkdownViewer content="# hi" darkMode />)
-    expect(created[0].opts).toMatchObject({ initialValue: '# hi', theme: 'dark' })
-    rerender(<MarkdownViewer content="# bye" darkMode />)
-    expect(created).toHaveLength(2)
-    expect(created[0].destroy).toHaveBeenCalled()
+  it('renders headings, list items, paragraphs, and dark mode', () => {
+    const md = '# H1\n\n## H2\n\n### H3\n\n- satu\n- dua\n\nParagraf'
+    render(<MarkdownViewer content={md} darkMode />)
+    const viewer = screen.getByTestId('markdown-viewer')
+    expect(viewer).toHaveAttribute('data-theme', 'dark')
+    expect(viewer).toHaveClass('text-gray-100')
+    expect(screen.getByRole('heading', { level: 2, name: 'H1' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'H2' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: 'H3' })).toBeInTheDocument()
+    expect(screen.getAllByRole('listitem').map((el) => el.textContent)).toEqual(['satu', 'dua'])
+    expect(screen.getByText('Paragraf')).toBeInTheDocument()
   })
 })

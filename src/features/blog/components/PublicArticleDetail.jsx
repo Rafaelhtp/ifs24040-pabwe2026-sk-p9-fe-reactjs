@@ -1,8 +1,7 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getPublicPostBySlug } from '../api/blogApi'
+import MarkdownViewer from '../../../components/MarkdownViewer'
 import { formatDate } from '../../../helpers/toolsHelper'
-
-const MarkdownViewer = lazy(() => import('../../../components/MarkdownViewer'))
 
 export default function PublicArticleDetail({ slug, navigate, isDark }) {
   // undefined = loading, null = not found
@@ -33,11 +32,15 @@ export default function PublicArticleDetail({ slug, navigate, isDark }) {
         {post.reading_time} menit baca
       </p>
       {post.cover_image && (
-        <img src={post.cover_image} alt={post.title} className="mb-6 max-h-96 w-full rounded object-cover" />
+        <img
+          src={post.cover_image}
+          alt={post.title}
+          fetchPriority="high"
+          decoding="async"
+          className="mb-6 max-h-96 w-full rounded object-cover"
+        />
       )}
-      <Suspense fallback={<div className="py-4 text-sm text-gray-600 dark:text-gray-300">Memuat konten...</div>}>
-        <MarkdownViewer content={post.content} darkMode={isDark} />
-      </Suspense>
+      <MarkdownViewer content={post.content} darkMode={isDark} />
     </article>
   )
 }
